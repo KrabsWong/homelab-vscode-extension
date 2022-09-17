@@ -15,6 +15,7 @@
   ],
   "main": "./dist/extension.js",
   "repository": "https://github.com/KrabsWong/homelab-vscode-extension",
+  "icon": "resources/homelab-krabs.png",
   "contributes": {
     "commands": [
       {
@@ -28,7 +29,7 @@
         {
           "id": "wooyoo-homelab",
           "title": "Wooyoo Homelab",
-          "icon": ""
+          "icon": "resources/homelab-krabs.svg"
         }
       ]
     },
@@ -51,7 +52,7 @@
     },
     "configuration": {
       "type": "object",
-      "title": "WooyooHomelab",
+      "title": "Homelab",
       "properties": {
         "Wooyoo.Homelab.LinksConfig": {
           "type": "string",
@@ -70,7 +71,7 @@
     "pretest": "yarn run compile-tests && yarn run compile && yarn run lint",
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js",
-    "build": "vsce package --out ./vsce`node ./scripts/build.js`-`git rev-parse --short HEAD`.vsix"
+    "build": "vsce package --out ./vsce/`node ./scripts/build.js`-`git rev-parse --short HEAD`.vsix"
   },
   "devDependencies": {
     "@types/glob": "^7.2.0",
