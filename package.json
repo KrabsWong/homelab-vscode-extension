@@ -3,7 +3,7 @@
   "displayName": "Wooyoo's Homelab Links",
   "description": "VSCode extension for my homelab",
   "publisher": "wooyoo",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "engines": {
     "vscode": "^1.71.0"
   },
@@ -68,7 +68,8 @@
     "watch-tests": "tsc -p . -w --outDir out",
     "pretest": "yarn run compile-tests && yarn run compile && yarn run lint",
     "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
+    "test": "node ./out/test/runTest.js",
+    "build": "vsce package --out ./vsce`node ./scripts/build.js`-`git rev-parse --short HEAD`.vsix"
   },
   "devDependencies": {
     "@types/glob": "^7.2.0",
