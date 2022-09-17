@@ -14,6 +14,7 @@
     "*"
   ],
   "main": "./dist/extension.js",
+  "repository": "https://github.com/KrabsWong/homelab-vscode-extension",
   "contributes": {
     "commands": [
       {
