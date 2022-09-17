@@ -1,0 +1,94 @@
+{
+  "name": "homelab",
+  "displayName": "Wooyoo's Homelab Links",
+  "description": "VSCode extension for my homelab",
+  "publisher": "wooyoo",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.71.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "*"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "wooyoo.homelab.open",
+        "title": "Open homelab link",
+        "icon": "$(link)"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "wooyoo-homelab",
+          "title": "Wooyoo Homelab",
+          "icon": ""
+        }
+      ]
+    },
+    "views": {
+      "wooyoo-homelab": [
+        {
+          "name": "links",
+          "id": "WooyooHomelabLinksView"
+        }
+      ]
+    },
+    "menus": {
+      "view/item/context": [
+        {
+          "command": "wooyoo.homelab.open",
+          "group": "inline",
+          "when": "viewItem != group"
+        }
+      ]
+    },
+    "configuration": {
+      "type": "object",
+      "title": "WooyooHomelab",
+      "properties": {
+        "Wooyoo.Homelab.LinksConfig": {
+          "type": "string",
+          "description": "Local path for links of homelab with yaml format"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "yarn run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "yarn run compile-tests && yarn run compile && yarn run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.2.0",
+    "@types/mocha": "^9.1.1",
+    "@types/node": "^18.7.18",
+    "@types/vscode": "^1.71.0",
+    "@types/yaml": "^1.9.7",
+    "@typescript-eslint/eslint-plugin": "^5.31.0",
+    "@typescript-eslint/parser": "^5.31.0",
+    "@vscode/test-electron": "^2.1.5",
+    "eslint": "^8.20.0",
+    "glob": "^8.0.3",
+    "mocha": "^10.0.0",
+    "ts-loader": "^9.3.1",
+    "typescript": "^4.7.4",
+    "vsce": "^2.11.0",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
+  },
+  "dependencies": {
+    "yaml": "^2.1.1"
+  }
+}
