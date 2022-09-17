@@ -1,3 +1,8 @@
 export default {
-  a: '123'
+  configuration: {
+    homelabLinks: {
+      section: 'Wooyoo.Homelab',
+      scope: 'LinksConfig',
+    }
+  }
 };

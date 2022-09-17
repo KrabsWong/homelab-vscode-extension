@@ -4,6 +4,7 @@ import { readFile } from 'fs/promises';
 import * as vscode from 'vscode';
 import YAML from 'yaml';
 
+import config from '@/config';
 import { IHomelabLinks } from '@/interface/homelab-links';
 
 class HomelabLinksProvider implements vscode.TreeDataProvider<HomelabLinksProps> {
@@ -11,11 +12,8 @@ class HomelabLinksProvider implements vscode.TreeDataProvider<HomelabLinksProps>
   get #homelabConfigPath(): {
     links: string | undefined
   } {
-    const config = {
-      section: 'Wooyoo.Homelab',
-      scope: 'LinksConfig',
-    };
-    const linksPath = vscode.workspace.getConfiguration(config.section).get(config.scope) as string | undefined;
+    const { section, scope } = config.configuration.homelabLinks;
+    const linksPath = vscode.workspace.getConfiguration(section).get(scope) as string | undefined;
     return {
       links: linksPath
     };
