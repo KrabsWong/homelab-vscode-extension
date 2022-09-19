@@ -1,17 +1,21 @@
+export interface IHomelabLinksBase {
+  port: number,
+  protocol: string,
+  domain: string,
+}
+
+export interface IHomelabLinksGroupItem {
+  lx: string,
+  label: string,
+  suffix?: string,
+  description?: string,
+}
+
 export interface IHomelabLinks {
-  Base: {
-    port: number,
-    protocol: string,
-    domain: string,
-  },
+  Base: IHomelabLinksBase,
   Sites: Array<{
     group: string,
     description?: string,
-    items: Array<{
-      lx: string,
-      label: string,
-      suffix?: string,
-      description?: string,
-    }>
+    items: IHomelabLinksGroupItem[]
   }>
 }

@@ -5,7 +5,7 @@ import * as vscode from 'vscode';
 import YAML from 'yaml';
 
 import config from '@/config';
-import { IHomelabLinks } from '@/interface/homelab-links';
+import { IHomelabLinks, IHomelabLinksBase, IHomelabLinksGroupItem } from '@/interface/homelab-links';
 
 class HomelabLinksProvider implements vscode.TreeDataProvider<HomelabLinksProps> {
   // 获取当前插件的配置信息
@@ -62,13 +62,14 @@ class HomelabLinksProvider implements vscode.TreeDataProvider<HomelabLinksProps>
   buildTreeviewData(links: IHomelabLinks): HomelabLinksProps[] {
     const { Base, Sites } = links;
     return Sites.reduce((result: HomelabLinksProps[], siteGroup) => {
-      const { group: groupLabel, items: groupItems, description } = siteGroup;
+      const { group: groupLabel, items: groupItems, description: groupDescription } = siteGroup;
       const subTreeItems = groupItems.reduce(( r: HomelabLinksProps[], groupItem ) => {
-        r.push(new HomelabLinksProps(
-          groupItem.label,
-          vscode.TreeItemCollapsibleState.None,
-          buildTreeviewItemUrl(Base, groupItem))
-        );
+        r.push(new HomelabLinksProps({
+          label: groupItem.label,
+          collapsibleState: vscode.TreeItemCollapsibleState.None,
+          url: buildTreeviewItemUrl(Base, groupItem),
+          description: groupItem.description,
+        }));
         return r;
       }, []);
 
@@ -77,7 +78,7 @@ class HomelabLinksProvider implements vscode.TreeDataProvider<HomelabLinksProps>
         collapsibleState: vscode.TreeItemCollapsibleState.Expanded,
         url: `group://${groupLabel}`,
         items: subTreeItems,
-        description,
+        description: groupDescription,
         contextValue: 'group',
       });
       return result;
@@ -85,21 +86,28 @@ class HomelabLinksProvider implements vscode.TreeDataProvider<HomelabLinksProps>
   }
 }
 
-const buildTreeviewItemUrl = (base: any, item: any) => {
+const buildTreeviewItemUrl = (base: IHomelabLinksBase, item: IHomelabLinksGroupItem) => {
   const { port, protocol, domain } = base;
   const { lx, suffix } = item;
   return `${protocol}//${lx}${domain}:${port}${suffix ? `/${suffix}` : ''}`;
 };
 
 class HomelabLinksProps extends vscode.TreeItem {
-  constructor(
-    public readonly label: string,
-    public readonly collapsibleState: vscode.TreeItemCollapsibleState,
-    public readonly url: string,
-    public readonly items?: HomelabLinksProps[],
-    public readonly contextValue?: string,
-  ) {
-    super(label, collapsibleState);
+  public readonly url: string;
+  public readonly items?: HomelabLinksProps[];
+  public readonly description?: string;
+  constructor(params: {
+    label: string,
+    url: string,
+    collapsibleState: vscode.TreeItemCollapsibleState,
+    description?: string,
+    contextValue?: string,
+    items?: HomelabLinksProps[],
+  }) {
+    super(params.label, params.collapsibleState);
+    this.description = params.description;
+    this.url = params.url;
+    this.collapsibleState = params.collapsibleState;
   }
 }
 
