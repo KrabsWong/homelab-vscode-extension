@@ -46,7 +46,7 @@
         {
           "command": "wooyoo.homelab.open",
           "group": "inline",
-          "when": "viewItem != group"
+          "when": "viewItem != group && view == WooyooHomelabLinksView"
         }
       ]
     },
